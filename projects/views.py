@@ -17,10 +17,6 @@ from projects.forms import ProjectForm
 # index.html is our template in templates/projects. We registered it and this view points to it now
 # Why do we put projects within templates? in production, django combines all templates into one folder, so we need to 
 #    specify which app goes with which template
-def project_list(request):
-    form = ProjectForm()
-    context = {'form': form}
-    return render(request, 'projects/index.html')
 
 def all_projects(request):
     # use this one to query the db to return all project objects
@@ -30,3 +26,9 @@ def all_projects(request):
     # print(projects)
     '''If you want it to show up on the screen, input a dictionary on the return statement, then we can render these objects in the html template '''
     return render(request, 'projects/all_projects.html', {'projects': projects})
+
+'''Here is our project_detail which takes the request as an input'''
+def project_detail(request, pk):
+    # This is how the query gets pulled
+    project = Project.objects.get(pk=pk)
+    return render(request, 'projects/detail.html', {'project': project})
